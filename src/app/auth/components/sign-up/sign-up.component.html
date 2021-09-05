@@ -8,7 +8,7 @@
       justify-content-center
     "
   >
-    <div class="col-12 col-sm-10 col-md-8 col-lg-5 card shadow p-4">
+    <form [formGroup]="form" (ngSubmit)="signUp()" class="col-12 col-sm-10 col-md-8 col-lg-5 card shadow p-4">
       <h2 class="text-center">Ingrese sus datos</h2>
       <div class="col-12 mx-auto mt-4">
         <div class="input-group">
@@ -17,7 +17,7 @@
             class="form-control"
             placeholder="Email"
             aria-label="Email"
-            aria-describedby="basic-addon1"
+            formControlName="email"
           />
         </div>
         <div class="input-group mt-4">
@@ -26,7 +26,7 @@
             class="form-control"
             placeholder="Username"
             aria-label="Username"
-            aria-describedby="basic-addon1"
+            formControlName="username"
           />
         </div>
         <div class="input-group mt-4">
@@ -35,7 +35,7 @@
             class="form-control"
             placeholder="Password"
             aria-label="Password"
-            aria-describedby="basic-addon1"
+            formControlName="password"
           />
         </div>
         <div class="input-group mt-4">
@@ -44,20 +44,20 @@
             class="form-control"
             placeholder="Repeat Password"
             aria-label="Repeat Password"
-            aria-describedby="basic-addon1"
+            formControlName="repeatPassword"
           />
         </div>
       </div>
       <div class="col-12 d-flex justify-content-center mt-4">
-        <button type="button" class="btn btn-outline-primary btn-lg">
+        <button type="submit" [disabled]="!form.valid" class="btn btn-outline-primary btn-lg">
           Registrarse
         </button>
       </div>
       <div class="col-12 d-flex justify-content-center mt-1">
-        <a routerLink="/auth/sign-up" class="link-secondary mt-3"
+        <a routerLink="/auth/login" class="link-secondary mt-3"
           >Ya tengo mi cuenta</a
         >
       </div>
-    </div>
+    </form>
   </div>
 </div>

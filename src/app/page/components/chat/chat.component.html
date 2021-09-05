@@ -1,0 +1,24 @@
+<div class="div-mensajes px-4 pb-3 d-flex flex-column">
+  <!-- <div class="card col-6 col-sm-5 col-md-4 col-lg-3 mt-4">
+    <div class="card-body">This is some text within a card body.</div>
+  </div>
+  <div class="clearfix"></div> -->
+  <div
+    class="card col-6 col-sm-5 col-md-4 col-lg-3 mt-4 ms-auto div-mensaje-yo"
+    *ngFor="let message of messages"
+  >
+    <div class="card-body">{{message}}</div>
+  </div>
+  <div class="clearfix"></div>
+  <!-- <div class="card col-6 col-sm-5 col-md-4 col-lg-3 mt-4">
+    <div class="card-body">This is some text within a card body.</div>
+  </div> -->
+  <input
+    type="text"
+    class="form-control mt-auto"
+    placeholder="Mensaje..."
+    aria-label="Mensaje..."
+    [(ngModel)]="newMessage"
+    (keyup.enter)="send()"
+  />
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SocketService } from './services/socket.service';
+import { UserService } from './services/user/user.service';
+import { SocketService } from './services/socket/socket.service';
 
 @Component({
   selector: 'app-pages',
@@ -10,12 +11,19 @@ import { SocketService } from './services/socket.service';
 export class PageComponent implements OnInit {
 
   public message: any;
+  public users: any;
 
-  constructor(private socketService: SocketService) { 
+  constructor(private userService: UserService, private socketService: SocketService) { 
+    this.userService.getUsers().subscribe(users => {
+      console.log(users)
+      this.users = users;
+    })
     // this.socketService.message.subscribe(doc => {
     //   this.message = doc.message
     // });
   }
 
   ngOnInit() {}
+
+  
 }
