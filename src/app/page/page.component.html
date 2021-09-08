@@ -1,8 +1,10 @@
 <div class="d-flex flex-row">
   <div class="col-12 col-md-4 div-contactos border-end">
-    <app-contacts></app-contacts>
+    <app-contacts
+      (setContact)="setContact($event)"
+    ></app-contacts>
   </div>
-  <div class="col-12 col-md-8 d-none d-md-block">
-    <app-chat></app-chat>
+  <div class="col-12 col-md-8 d-none d-md-block" *ngIf="!!socketService.room">
+    <app-chat [userToMessage]="userToMessage"></app-chat>
   </div>
 </div>

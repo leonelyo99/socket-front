@@ -1,29 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './services/user/user.service';
+import { AuthService } from '../shared/services/auth/auth.service';
 import { SocketService } from './services/socket/socket.service';
 
 @Component({
   selector: 'app-pages',
   templateUrl: './page.component.html',
-  styleUrls: ['./page.component.css']
+  styleUrls: ['./page.component.css'],
 })
-
 export class PageComponent implements OnInit {
-
+  public userToMessage: any;
   public message: any;
-  public users: any;
 
-  constructor(private userService: UserService, private socketService: SocketService) { 
-    this.userService.getUsers().subscribe(users => {
-      console.log(users)
-      this.users = users;
-    })
-    // this.socketService.message.subscribe(doc => {
-    //   this.message = doc.message
-    // });
+  constructor(public authService: AuthService, public socketService: SocketService) {
+    this.authService.cargarStorage();
   }
 
   ngOnInit() {}
 
-  
+  setContact(user: any) {
+    this.userToMessage = user;
+  }
 }

@@ -25,7 +25,7 @@ export class AuthService {
       .pipe(
         map((resp) => {
           this.guardarStorage({ ...resp, username: user.username });
-          return true;
+          return resp;
         })
       )
       .pipe(

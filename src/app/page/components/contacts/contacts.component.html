@@ -12,14 +12,17 @@
       aria-describedby="basic-addon1"
     />
   </div>
-  <button type="button" class="list-group-item list-group-item-action">
-    A second item
-    <span class="badge bg-primary rounded-pill float-end">14</span>
-  </button>
-  <button type="button" class="list-group-item list-group-item-action">
-    A third button item
-  </button>
-  <button type="button" class="list-group-item list-group-item-action">
-    A fourth button item
-  </button>
+  <div *ngFor="let contact of contacts; let i = index">
+    <button
+      (click)="handleSetContact(i)"
+      type="button"
+      class="list-group-item list-group-item-action d-flex align-items-center"
+    >
+      {{ contact.username }}
+      <div
+        *ngIf="haveNotification(contact._id)"
+        class="div-notification ms-auto"
+      ></div>
+    </button>
+  </div>
 </div>

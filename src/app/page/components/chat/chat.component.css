@@ -3,6 +3,11 @@
 }
 
 .div-mensajes {
+  height: calc(100vh - 56px);
+  overflow-y: scroll;
+}
+
+.div-mensajes-container {
   height: 100vh;
   background-color: #cff4fc;
 }
