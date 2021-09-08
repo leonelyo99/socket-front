@@ -6,6 +6,8 @@ import { of } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth/auth.service';
+import { Resp } from '../../models/Resp.model';
+import { User } from '../../../shared/models/User.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,16 +15,14 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 export class UserService {
   constructor(public http: HttpClient, private authService: AuthService) {}
 
-  getUsers(userId) {
+  getUsers(userId: string) {
     let url = environment.apiURL + '/user/users';
     return this.http
-    .get(url)
-    .pipe(
-      map(({ ok, users }: any) => ({
-        users: users.filter(
-            (user: any) => user._id !== userId
-          ),
-          ok,
+      .get(url)
+      .pipe(
+        map(({ error, data }: Resp<User[]>) => ({
+          data: data.filter((user: User) => user._id !== userId),
+          error,
         }))
       )
       .pipe(
@@ -32,7 +32,7 @@ export class UserService {
       );
   }
 
-  getUserMessages(user) {
+  getUserMessages(user:User) {
     let url = environment.apiURL + `/user/messages`;
     const values = {
       users: [{ id: user._id }, { id: this.authService.userId }],

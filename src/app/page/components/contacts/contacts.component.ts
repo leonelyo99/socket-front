@@ -3,6 +3,9 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
 import { SocketService } from '../../services/socket/socket.service';
 import { Subscription } from 'rxjs';
+import { Resp } from '../../models/Resp.model';
+import { IncomingMessages } from '../../models/IncomingMessages';
+import { User } from '../../../shared/models/User.model';
 
 @Component({
   selector: 'app-contacts',
@@ -10,10 +13,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./contacts.component.css'],
 })
 export class ContactsComponent implements OnInit {
-  @Output() setContact = new EventEmitter<any>();
-  public selectedUser;
+  @Output() setContact = new EventEmitter<User>();
+  public selectedUser: User;
   public subscriptionListenNotification: Subscription = null;
-  public contacts: any[] = [];
+  public contacts: User[] = [];
   public notifications: string[] = [];
 
   constructor(
@@ -21,9 +24,10 @@ export class ContactsComponent implements OnInit {
     private userService: UserService,
     private socketService: SocketService
   ) {
+    !!this.subscriptionListenNotification && this.subscriptionListenNotification.unsubscribe()
     this.subscriptionListenNotification = this.socketService
       .listenNotification(this.authService.userId)
-      .subscribe((resp) => {
+      .subscribe((resp: string) => {
         !!this.selectedUser._id &&
           this.selectedUser._id != resp &&
           this.notifications.push(resp);
@@ -33,9 +37,9 @@ export class ContactsComponent implements OnInit {
   ngOnInit(): void {
     this.userService
       .getUsers(this.authService.userId)
-      .subscribe((resp: any) => {
-        resp.ok && this.contacts.push(...resp.users);
-        resp.ok && this.handleSetContact(0);
+      .subscribe((resp: Resp<User[]>) => {
+        !resp.error && this.contacts.push(...resp.data);
+        !resp.error && this.handleSetContact(0);
       });
   }
 
@@ -43,21 +47,22 @@ export class ContactsComponent implements OnInit {
     this.authService.logOut();
   }
 
-  handleSetContact(index) {
+  handleSetContact(index: number):void {
     this.setContact.emit(this.contacts[index]);
     this.selectedUser = this.contacts[index];
     this.userService
       .getUserMessages(this.contacts[index])
-      .subscribe((resp: any) => {
+      .subscribe((resp: Resp<IncomingMessages>) => {
         this.notifications = this.notifications.filter(
           (userId) => userId !== this.contacts[index]._id
         );
-        this.socketService.room = resp.room;
-        this.socketService.messages = resp.messages;
+        this.socketService.room = resp.data.room;
+        this.socketService.messages = resp.data.messages;
+        this.socketService.listenMessage()
       });
   }
 
-  haveNotification(id) {
+  haveNotification(id: string): boolean {
     return this.notifications.some((notified) => notified === id);
   }
 }
