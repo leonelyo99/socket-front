@@ -15,11 +15,11 @@ export class SocketService {
 
   constructor(private socket: Socket) {}
 
-  newMessage(message: SendMessage) {
+  newMessage(message: SendMessage): void {
     this.socket.emit('newMessage', message);
   }
 
-  listenMessage() {
+  listenMessage(): void {
     !!this.subscriptionListenMessage && this.subscriptionListenMessage.unsubscribe()
     this.subscriptionListenMessage = this.socket
       .fromEvent<Resp<Message>>(`message-${this.room}`)
@@ -31,6 +31,10 @@ export class SocketService {
   }
 
   listenNotification(userId: string) {
-    return this.socket.fromEvent<any>(`notification-${userId}`);
+    return this.socket.fromEvent<Resp<string>>(`notification-${userId}`);
+  }
+
+  listenError() {
+    return this.socket.fromEvent<Resp<string>>(`error`);
   }
 }

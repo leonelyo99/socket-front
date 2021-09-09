@@ -20,9 +20,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  login() {
+  login(): void {
     this.authService
       .login(this.form.value)
-      .subscribe((resp: any) => resp && this.router.navigate(['/page']));
+      .subscribe((resp: boolean) => resp && this.router.navigate(['/page']));
   }
 }

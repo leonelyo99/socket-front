@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  send() {
+  send(): void {
     !!this.newMessage &&
       !!this.socketService.room &&
       this.socketService.newMessage({

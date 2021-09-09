@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
 import { SocketService } from '../../services/socket/socket.service';
@@ -27,10 +27,10 @@ export class ContactsComponent implements OnInit {
     !!this.subscriptionListenNotification && this.subscriptionListenNotification.unsubscribe()
     this.subscriptionListenNotification = this.socketService
       .listenNotification(this.authService.userId)
-      .subscribe((resp: string) => {
+      .subscribe((resp: Resp<string>) => {
         !!this.selectedUser._id &&
-          this.selectedUser._id != resp &&
-          this.notifications.push(resp);
+          this.selectedUser._id != resp.data &&
+          this.notifications.push(resp.data);
       });
   }
 

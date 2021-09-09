@@ -2,40 +2,50 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import Swal from 'sweetalert2';
+import { of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from '../../models/User.model';
+import { Resp } from '../../../page/models/Resp.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  public username: any;
-  public token: string;
-  public userId: string;
+  public username: string = null;
+  public token: string = null;
+  public userId: string = null;
 
   constructor(public http: HttpClient, public router: Router) {
     this.cargarStorage();
   }
 
-  login(user: any) {
+  login(user: User): Observable<boolean> {
     let url = environment.apiURL + '/auth/login';
     return this.http
       .post(url, user)
       .pipe(
-        map((resp) => {
-          this.guardarStorage({ ...resp, username: user.username });
-          return resp;
+        map((resp: Resp<User>) => {
+          this.guardarStorage(resp.data);
+          return true;
         })
       )
-      .pipe(
-        catchError((err) =>
-          of([Swal.fire('Error Login', err.error.message, 'error')])
-        )
-      );
+      .pipe(catchError((err) => of(false)));
   }
 
-  logOut() {
+  signup(user: User): Observable<boolean> {
+    let url = environment.apiURL + '/auth/signup';
+    return this.http
+      .post(url, user)
+      .pipe(
+        map((resp: Resp<User>) => {
+          this.guardarStorage(resp.data);
+          return true;
+        })
+      )
+      .pipe(catchError((err) => of(false)));
+  }
+
+  logOut(): void {
     this.token = '';
     this.username = '';
     this.userId = '';
@@ -47,23 +57,7 @@ export class AuthService {
     this.router.navigate(['/auth/login']);
   }
 
-  signup(user: any) {
-    let url = environment.apiURL + '/auth/signup';
-    return this.http
-      .post(url, user)
-      .pipe(
-        map((resp) => {
-          this.guardarStorage({ ...resp, username: user.username });
-          return true;
-        })
-      )
-      .pipe(
-        catchError((err) =>
-          of([Swal.fire('Error Login', err.error.message, 'error')])
-        )
-      );
-  }
-  cargarStorage() {
+  cargarStorage(): void {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token');
       this.username = localStorage.getItem('username');
@@ -75,13 +69,13 @@ export class AuthService {
     }
   }
 
-  guardarStorage(resp: any) {
-    localStorage.setItem('userId', resp.userId);
+  guardarStorage(resp: User): void {
+    localStorage.setItem('userId', resp._id);
     localStorage.setItem('token', resp.token);
     localStorage.setItem('username', resp.username);
 
     this.username = resp.username;
     this.token = resp.token;
-    this.userId = resp.userId;
+    this.userId = resp._id;
   }
 }
