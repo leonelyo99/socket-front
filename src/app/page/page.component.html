@@ -1,10 +1,27 @@
 <div class="d-flex flex-row">
-  <div class="col-12 col-md-4 div-contactos border-end">
-    <app-contacts
-      (setContact)="setContact($event)"
-    ></app-contacts>
+  <div class="div-float-button d-block d-md-none" (click)="handleSeeContacts()">
+    <img
+      *ngIf="!seeContacts"
+      src="/assets/icons/messages.svg"
+      class="figure-img img-fluid"
+    />
+    <img
+      *ngIf="seeContacts"
+      src="/assets/icons/friends.svg"
+      class="figure-img img-fluid"
+    />
   </div>
-  <div class="col-12 col-md-8 d-none d-md-block" *ngIf="!!socketService.room">
+  <div
+    [ngClass]="!seeContacts ? 'd-block' : 'd-none d-md-block'"
+    class="col-12 col-md-4 div-contactos border-end"
+  >
+    <app-contacts (setContact)="setContact($event)"></app-contacts>
+  </div>
+  <div
+    [ngClass]="seeContacts ? 'd-block' : 'd-none d-md-block'"
+    class="col-12 col-md-8"
+    *ngIf="!!socketService.room"
+  >
     <app-chat [userToMessage]="userToMessage"></app-chat>
   </div>
 </div>

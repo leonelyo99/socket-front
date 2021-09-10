@@ -16,7 +16,7 @@ export class SocketService {
   constructor(private socket: Socket) {}
 
   newMessage(message: SendMessage): void {
-    this.socket.emit('newMessage', message);
+    this.socket.emit('new-message', message);
   }
 
   listenMessage(): void {

@@ -4,11 +4,12 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
+  HttpResponse,
 } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 
 @Injectable()
@@ -27,16 +28,27 @@ export class TokenInterceptorService implements HttpInterceptor {
       });
     }
     req = this.addAuthenticationToken(req);
-
-    return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => {
-        Swal.fire('Error', error.error.message, 'error');
-        if (error && error.status === 401) {
-          this.authService.logOut();
-        }
-        return throwError(error);
-      })
-    );
+    return next
+      .handle(req)
+      .pipe(
+        map((resp: HttpResponse<any>) => {
+          if (!!resp.headers && !!resp.headers.get('X-Token')) {
+            const token = resp.headers.get('X-Token');
+            localStorage.setItem('token', token);
+            this.authService.token = token;
+          }
+          return resp;
+        })
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error.message, 'error');
+          if (error && error.status === 401) {
+            this.authService.logOut();
+          }
+          return throwError(error);
+        })
+      );
   }
 
   private addAuthenticationToken(request: HttpRequest<any>): HttpRequest<any> {

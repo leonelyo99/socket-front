@@ -4,6 +4,7 @@ import { SocketService } from './services/socket/socket.service';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Resp } from './models/Resp.model';
+import { User } from '../shared/models/User.model';
 
 @Component({
   selector: 'app-pages',
@@ -12,8 +13,8 @@ import { Resp } from './models/Resp.model';
 })
 export class PageComponent implements OnDestroy {
   public subscriptionListenError: Subscription = null;
-  public userToMessage: any;
-  public message: any;
+  public userToMessage: User;
+  public seeContacts: boolean = false;
 
   constructor(
     public authService: AuthService,
@@ -35,7 +36,11 @@ export class PageComponent implements OnDestroy {
       this.subscriptionListenError.unsubscribe();
   }
 
-  setContact(user: any) {
+  setContact(user: User) {
     this.userToMessage = user;
+  }
+
+  handleSeeContacts(): void{
+    this.seeContacts = !this.seeContacts;
   }
 }
