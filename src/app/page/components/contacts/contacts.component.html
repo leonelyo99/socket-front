@@ -16,6 +16,8 @@
     <button
       (click)="handleSetContact(i)"
       type="button"
+      [ngClass]="selectedUser._id === contact._id ? 'selected-contact' : ''"
+      [disabled]="selectedUser._id === contact._id"
       class="list-group-item list-group-item-action d-flex align-items-center"
     >
       {{ contact.username }}

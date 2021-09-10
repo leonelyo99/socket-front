@@ -9,3 +9,7 @@
   background-color: #0d6efd;
   border-radius: 100%;
 }
+
+.selected-contact {
+  background-color: #cff4fc;
+}
