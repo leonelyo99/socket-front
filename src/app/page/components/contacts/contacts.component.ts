@@ -3,7 +3,7 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
 import { SocketService } from '../../services/socket/socket.service';
 import { Subscription } from 'rxjs';
-import { Resp } from '../../models/Resp.model';
+import { Resp } from '../../../shared/models/Resp.model';
 import { IncomingMessages } from '../../models/IncomingMessages';
 import { User } from '../../../shared/models/User.model';
 

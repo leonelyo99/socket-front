@@ -1,6 +1,6 @@
 export class Resp<T> {
     constructor (
-        public error: string,
+        public error: boolean,
         public data: T
     ) { }
 

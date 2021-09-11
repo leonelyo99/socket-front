@@ -1,3 +1,14 @@
 .container-height {
-    height: 100vh;
+  height: 100vh;
+}
+
+.img-see {
+  width: 50px;
+  height: 100%;
+  cursor: pointer;
+}
+
+.see-img {
+  filter: invert(20%);
+  margin: auto;
 }

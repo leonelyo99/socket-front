@@ -30,5 +30,11 @@ export class ChatComponent implements OnInit {
           username: this.authService.username,
         },
       });
+    this.newMessage = '';
+    this.scrollToTop()
+  }
+
+  scrollToTop(){
+    window.scroll(0,0);
   }
 }

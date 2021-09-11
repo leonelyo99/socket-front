@@ -5,7 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../../models/User.model';
-import { Resp } from '../../../page/models/Resp.model';
+import { Resp } from '../../models/Resp.model';
 
 @Injectable({
   providedIn: 'root',

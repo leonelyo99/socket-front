@@ -3,7 +3,7 @@ import { AuthService } from '../shared/services/auth/auth.service';
 import { SocketService } from './services/socket/socket.service';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
-import { Resp } from './models/Resp.model';
+import { Resp } from '../shared/models/Resp.model';
 import { User } from '../shared/models/User.model';
 
 @Component({

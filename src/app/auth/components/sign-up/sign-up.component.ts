@@ -17,6 +17,8 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 })
 export class SignUpComponent implements OnInit {
   public form: FormGroup;
+  public seePassword: boolean = false;
+  public seeRepeatPassword: boolean = false;
 
   constructor(private authService: AuthService, public router: Router) {
     this.form = new FormGroup(
@@ -53,5 +55,13 @@ export class SignUpComponent implements OnInit {
     this.authService
       .signup(this.form.value)
       .subscribe((resp: boolean) => resp && this.router.navigate(['/page']));
+  }
+
+  handleSeePassword(): void{
+    this.seePassword = !this.seePassword;
+  }
+
+  handleSeeRepeatPassword(): void{
+    this.seeRepeatPassword = !this.seeRepeatPassword;
   }
 }

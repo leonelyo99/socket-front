@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map} from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../shared/services/auth/auth.service';
-import { Resp } from '../../models/Resp.model';
+import { Resp } from '../../../shared/models/Resp.model';
 import { User } from '../../../shared/models/User.model';
 import { IncomingMessages } from '../../models/IncomingMessages';
 

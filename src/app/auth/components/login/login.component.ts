@@ -10,6 +10,7 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
   public form: FormGroup;
+  public seePassword: boolean = false;
 
   constructor(private authService: AuthService, public router: Router) {
     this.form = new FormGroup({
@@ -24,5 +25,9 @@ export class LoginComponent implements OnInit {
     this.authService
       .login(this.form.value)
       .subscribe((resp: boolean) => resp && this.router.navigate(['/page']));
+  }
+
+  handleSeePassword(): void{
+    this.seePassword = !this.seePassword;
   }
 }
