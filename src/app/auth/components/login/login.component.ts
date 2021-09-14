@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/shared/models/User.model';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 
 @Component({
@@ -23,11 +24,11 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.authService
-      .login(this.form.value)
+      .login(new User(this.form.value.username, this.form.value.password))
       .subscribe((resp: boolean) => resp && this.router.navigate(['/page']));
   }
 
-  handleSeePassword(): void{
+  handleSeePassword(): void {
     this.seePassword = !this.seePassword;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../../shared/services/auth/auth.service';
+import { SendMessage } from '../../models/SendMessage.model';
 import { SocketService } from '../../services/socket/socket.service';
 
 @Component({
@@ -14,27 +15,24 @@ export class ChatComponent implements OnInit {
   constructor(
     public socketService: SocketService,
     public authService: AuthService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {}
 
   send(): void {
     !!this.newMessage &&
       !!this.socketService.room &&
-      this.socketService.newMessage({
-        message: this.newMessage,
-        room: this.socketService.room,
-        user: {
+      this.socketService.newMessage(
+        new SendMessage(this.newMessage, this.socketService.room, {
           token: this.authService.token,
           username: this.authService.username,
-        },
-      });
+        })
+      );
     this.newMessage = '';
-    this.scrollToTop()
+    this.scrollToTop();
   }
 
-  scrollToTop(){
-    window.scroll(0,0);
+  scrollToTop() {
+    window.scroll(0, 0);
   }
 }

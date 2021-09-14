@@ -8,6 +8,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/shared/models/User.model';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 
 @Component({
@@ -53,7 +54,7 @@ export class SignUpComponent implements OnInit {
 
   signUp(): void {
     this.authService
-      .signup(this.form.value)
+      .signup(new User(this.form.value.username, this.form.value.password, this.form.value.email))
       .subscribe((resp: boolean) => resp && this.router.navigate(['/page']));
   }
 
