@@ -1,9 +1,9 @@
-<div class="div-mensajes-container">
-  <div class="div-mensajes px-4 py-4 d-flex flex-column">
+<div class="div-messages-container">
+  <div class="div-messages px-4 py-4 d-flex flex-column">
     <div
       class="card col-6 col-sm-5 col-md-4 col-lg-3 mt-4"
       *ngFor="let message of socketService.messages"
-      [ngClass]="message.user == authService.userId ? 'ms-auto div-mensaje-yo' : ''"
+      [ngClass]="message.user == authService.userId ? 'ms-auto div-my-message' : ''"
     >
       <div class="card-body">{{message.data}}</div>
     </div>

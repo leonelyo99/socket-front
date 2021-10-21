@@ -29,10 +29,5 @@ export class ChatComponent implements OnInit {
         })
       );
     this.newMessage = '';
-    this.scrollToTop();
-  }
-
-  scrollToTop() {
-    window.scroll(0, 0);
   }
 }

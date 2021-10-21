@@ -16,7 +16,7 @@ export class AuthService {
   public userId: string = null;
 
   constructor(public http: HttpClient, public router: Router) {
-    this.cargarStorage();
+    this.loadStorage();
   }
 
   login(user: User): Observable<boolean> {
@@ -25,7 +25,7 @@ export class AuthService {
       .post(url, user)
       .pipe(
         map((resp: Resp<User>) => {
-          this.guardarStorage(resp.data);
+          this.saveStorage(resp.data);
           return true;
         })
       )
@@ -38,7 +38,7 @@ export class AuthService {
       .post(url, user)
       .pipe(
         map((resp: Resp<User>) => {
-          this.guardarStorage(resp.data);
+          this.saveStorage(resp.data);
           return true;
         })
       )
@@ -57,7 +57,7 @@ export class AuthService {
     this.router.navigate(['/auth/login']);
   }
 
-  cargarStorage(): void {
+  loadStorage(): void {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token');
       this.username = localStorage.getItem('username');
@@ -69,7 +69,7 @@ export class AuthService {
     }
   }
 
-  guardarStorage(resp: User): void {
+  saveStorage(resp: User): void {
     localStorage.setItem('userId', resp._id);
     localStorage.setItem('token', resp.token);
     localStorage.setItem('username', resp.username);
@@ -77,5 +77,9 @@ export class AuthService {
     this.username = resp.username;
     this.token = resp.token;
     this.userId = resp._id;
+  }
+
+  isLogged(){
+    return  this.token.length > 5;
   }
 }

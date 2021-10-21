@@ -20,7 +20,7 @@ export class PageComponent implements OnDestroy {
     public authService: AuthService,
     public socketService: SocketService
   ) {
-    this.authService.cargarStorage();
+    this.authService.loadStorage();
     this.subscriptionListenError = this.socketService
       .listenError()
       .subscribe((error:Resp<any>) => {
