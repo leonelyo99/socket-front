@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Resp } from '../shared/models/Resp.model';
 import { User } from '../shared/models/User.model';
+import { HelperErrorService } from '../shared/helpers/errors.service';
 
 @Component({
   selector: 'app-pages',
@@ -18,13 +19,18 @@ export class PageComponent implements OnDestroy {
 
   constructor(
     public authService: AuthService,
-    public socketService: SocketService
+    public socketService: SocketService,
+    private helperErrorService: HelperErrorService
   ) {
     this.authService.loadStorage();
     this.subscriptionListenError = this.socketService
       .listenError()
-      .subscribe((error:Resp<any>) => {
-        Swal.fire('Error', error.data.message, 'error');
+      .subscribe((error: Resp<any>) => {
+        Swal.fire(
+          'Error',
+          this.helperErrorService.getErrorMessage(error.data.message),
+          'error'
+        );
         if (error && error.data.status === 401) {
           this.authService.logOut();
         }
@@ -40,7 +46,7 @@ export class PageComponent implements OnDestroy {
     this.userToMessage = user;
   }
 
-  handleSeeContacts(): void{
+  handleSeeContacts(): void {
     this.seeContacts = !this.seeContacts;
   }
 }

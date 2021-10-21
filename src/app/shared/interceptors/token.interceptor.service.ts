@@ -8,15 +8,16 @@ import {
 } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
+import {HelperErrorService} from '../helpers/errors.service';
 
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
   private AUTH_HEADER = 'Authorization';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private helperErrorService: HelperErrorService) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -42,7 +43,7 @@ export class TokenInterceptorService implements HttpInterceptor {
       )
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          Swal.fire('Error', error.error.message, 'error');
+          Swal.fire('Error', this.helperErrorService.getErrorMessage(error.error.message), 'error');
           if (error && error.status === 401) {
             this.authService.logOut();
           }

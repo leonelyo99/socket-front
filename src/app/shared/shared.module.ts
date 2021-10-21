@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './services/auth/auth.service';
 import { TokenInterceptorService } from './interceptors/token.interceptor.service';
 import { LoginGuard } from './services/guards/login.guard';
+import { HelperErrorService } from './helpers/errors.service';
 
 @NgModule({
   imports: [CommonModule, RouterModule, HttpClientModule],
@@ -13,6 +14,7 @@ import { LoginGuard } from './services/guards/login.guard';
   providers: [
     AuthService,
     LoginGuard,
+    HelperErrorService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
