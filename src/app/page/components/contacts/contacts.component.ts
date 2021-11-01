@@ -13,7 +13,6 @@ import { User } from '../../../shared/models/User.model';
   styleUrls: ['./contacts.component.css'],
 })
 export class ContactsComponent implements OnInit {
-  @Output() setContact = new EventEmitter<User>();
   public selectedUser: User;
   public subscriptionListenNotification: Subscription = null;
   public contacts: User[] = [];
@@ -48,7 +47,6 @@ export class ContactsComponent implements OnInit {
   }
 
   handleSetContact(index: number):void {
-    this.setContact.emit(this.contacts[index]);
     this.selectedUser = this.contacts[index];
     this.userService
       .getUserMessages(this.contacts[index])

@@ -4,7 +4,6 @@ import { SocketService } from './services/socket/socket.service';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Resp } from '../shared/models/Resp.model';
-import { User } from '../shared/models/User.model';
 import { HelperErrorService } from '../shared/helpers/errors.service';
 
 @Component({
@@ -14,7 +13,6 @@ import { HelperErrorService } from '../shared/helpers/errors.service';
 })
 export class PageComponent implements OnDestroy {
   public subscriptionListenError: Subscription = null;
-  public userToMessage: User;
   public seeContacts: boolean = false;
 
   constructor(
@@ -40,10 +38,6 @@ export class PageComponent implements OnDestroy {
   ngOnDestroy(): void {
     !!this.subscriptionListenError &&
       this.subscriptionListenError.unsubscribe();
-  }
-
-  setContact(user: User) {
-    this.userToMessage = user;
   }
 
   handleSeeContacts(): void {

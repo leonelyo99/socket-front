@@ -9,7 +9,6 @@ import { SocketService } from '../../services/socket/socket.service';
   styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent implements OnInit {
-  @Input() userToMessage = null;
   public newMessage: string = '';
 
   constructor(
