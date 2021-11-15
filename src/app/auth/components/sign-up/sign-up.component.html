@@ -9,8 +9,9 @@
     "
   >
     <form
-      [formGroup]="form"
+      [formGroup]="signUpForm"
       (ngSubmit)="signUp()"
+      id="signUpForm"
       class="col-12 col-sm-10 col-md-8 col-lg-5 card shadow p-4"
     >
       <h2 class="text-center">Ingrese sus datos</h2>
@@ -83,7 +84,7 @@
       <div class="col-12 d-flex justify-content-center mt-4">
         <button
           type="submit"
-          [disabled]="!form.valid"
+          [disabled]="!signUpForm.valid"
           class="btn btn-outline-primary btn-lg"
         >
           Registrarse

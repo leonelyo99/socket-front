@@ -10,11 +10,11 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  public form: FormGroup;
+  public loginForm: FormGroup;
   public seePassword: boolean = false;
 
   constructor(private authService: AuthService, public router: Router) {
-    this.form = new FormGroup({
+    this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.authService
-      .login(new User(this.form.value.username, this.form.value.password))
+      .login(new User(this.loginForm.value.username, this.loginForm.value.password))
       .subscribe((resp: boolean) => resp && this.router.navigate(['/page']));
   }
 

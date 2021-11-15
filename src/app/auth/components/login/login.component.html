@@ -10,7 +10,8 @@
   >
     <form
       class="col-12 col-sm-10 col-md-8 col-lg-5 card shadow p-4"
-      [formGroup]="form"
+      id="loginForm"
+      [formGroup]="loginForm"
       (ngSubmit)="login()"
     >
       <h2 class="text-center">Bienvenido</h2>
@@ -53,7 +54,7 @@
       <div class="col-12 d-flex justify-content-center mt-4">
         <button
           type="submit"
-          [disabled]="!form.valid"
+          [disabled]="!loginForm.valid"
           class="btn btn-outline-primary btn-lg"
         >
           Login
